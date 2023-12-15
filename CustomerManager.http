@@ -1,0 +1,30 @@
+@CustomerManager_HostAddress = http://localhost:5225
+
+### Get all customers
+GET {{CustomerManager_HostAddress}}/customers/
+Accept: application/json
+
+### Post new customer(s)
+POST {{CustomerManager_HostAddress}}/customers/
+Content-Type: application/json
+
+[
+    {
+        "firstName": "John",
+        "lastName": "Doe",
+        "age": 30,
+        "id": 1    
+    },
+    {
+        "firstName": "Abe",
+        "lastName": "Baker",
+        "age": 25,
+        "id": 2    
+    },
+    {
+        "firstName": "Abe",
+        "lastName": "Afonso",
+        "age": 27,
+        "id": 3    
+    }
+]
