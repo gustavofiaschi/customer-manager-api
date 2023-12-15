@@ -2,9 +2,10 @@ using LiteDB;
 
 public static class CustomerDataService 
 {
+    const string databaseName = "CustomersData.db";
     public static IEnumerable<Customer> LoadCustomers()
     {
-        using(var db = new LiteDatabase(@"CustomersData.db"))
+        using(var db = new LiteDatabase(databaseName))
         {
             // Get customer collection
             var col = db.GetCollection<Customer>("customers");
@@ -18,7 +19,7 @@ public static class CustomerDataService
 
     public static void StoreData(IEnumerable<Customer> customers)
     {
-        using(var db = new LiteDatabase(@"CustomersData.db"))
+        using(var db = new LiteDatabase(databaseName))
         {
             var col = db.GetCollection<Customer>("customers");   
             col.DeleteAll();
