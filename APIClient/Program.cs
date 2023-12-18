@@ -11,7 +11,6 @@ class Program
     static void Main(string[] args)
     {
         RunPostAsync().Wait();
-        RunGetAsync().Wait();
         RunPostAsync(6).Wait();
         RunGetAsync().Wait();
     }
@@ -24,7 +23,10 @@ class Program
         };
         var response = await client.GetAsync("customers");        
         Console.WriteLine($"{(int)response.StatusCode} ({response.ReasonPhrase})");
-        Console.WriteLine($"Content: {response.Content}");        
+
+        var content = await response.Content.ReadAsStringAsync();
+
+        Console.WriteLine($"Content: {content}");        
     }
     
     static async Task RunPostAsync(int initialId = 0)
@@ -39,6 +41,9 @@ class Program
 
         var response = await client.PostAsync("customers", content);
         Console.WriteLine($"{(int)response.StatusCode} ({response.ReasonPhrase})");
+        var stack = await response.Content.ReadAsStringAsync();
+
+        Console.WriteLine($"Content: {stack}");
     }
 
     private static List<CustomerClient> generateCustomers(int initialId)
