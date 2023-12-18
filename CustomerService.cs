@@ -9,26 +9,28 @@ public static class CustomerService
 
     private static void Validate(Customer customer)
     {
-        if (string.IsNullOrWhiteSpace(customer.firstName))
-            throw new ArgumentNullException(nameof(customer.firstName));
+        if (string.IsNullOrWhiteSpace(customer.FirstName))
+            throw new ArgumentNullException(nameof(customer.FirstName));
 
-        if (string.IsNullOrWhiteSpace(customer.lastName))
-            throw new ArgumentNullException(nameof(customer.lastName));
+        if (string.IsNullOrWhiteSpace(customer.LastName))
+            throw new ArgumentNullException(nameof(customer.LastName));
 
-        if (customer.age < 18)
-            throw new ArgumentOutOfRangeException(nameof(customer.age));
+        if (customer.Age < 18)
+            throw new ArgumentOutOfRangeException(nameof(customer.Age));
         
-        if (customer.id <= 0)
-            throw new ArgumentOutOfRangeException(nameof(customer.id));
+        if (customer.Id <= 0)
+            throw new ArgumentOutOfRangeException(nameof(customer.Id));
             
-        if (customers.Any(c => c.id == customer.id))
-            throw new ArgumentException ($"Customer #{customer.id} already exists");
+        if (customers.Any(c => c.Id == customer.Id))
+            throw new ArgumentException ($"Customer #{customer.Id} already exists");
     }
 
     public static List<Customer> GetAll() => CustomerDataService.GetCustomers().ToList();
     
     public static void SortAdd(Customer customer)
     {
+        customers = CustomerDataService.GetCustomers().ToList();
+        
         Validate(customer);
         
         if(customers.Count == 0)
@@ -40,8 +42,8 @@ public static class CustomerService
 
         for (int i = 0; i < customers.Count; i++)
         {
-            var orderLast = String.Compare(customers[i].lastName, customer.lastName);
-            var orderFirst = String.Compare(customers[i].firstName, customer.firstName);
+            var orderLast = String.Compare(customers[i].LastName, customer.LastName);
+            var orderFirst = String.Compare(customers[i].FirstName, customer.FirstName);
 
             if(orderLast < 0)
             {

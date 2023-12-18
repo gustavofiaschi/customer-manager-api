@@ -1,8 +1,9 @@
 using System.Text.Json.Serialization;
 
-public class Customer
+public class CustomerClient
 {
-    public Customer(string firstName, string lastName, int age, int id)
+    
+    public CustomerClient(string firstName, string lastName, int age, int id)
     {
         FirstName = firstName;
         LastName = lastName;
