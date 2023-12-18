@@ -15,7 +15,12 @@ cd CustomerManager
 And
 
 To run the simulator:
+cd APIClient "dotnet run"
 
-cd APIClient
-"dotnet run"
+OR
+
+using CustomerManager.http by VSCode to test API
+
+
+
 
