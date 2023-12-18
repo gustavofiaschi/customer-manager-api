@@ -1,20 +1,40 @@
 using LiteDB;
 
+/// <summary>
+/// This class is responsible to provide the business logic for the customer.
+/// </summary>
 public static class CustomerService
 {        
-    public static List<Customer> GetAll() => CustomerDataService.LoadCustomers().ToList();
+    private static List<Customer> customers = CustomerDataService.GetCustomers().ToList();
+
+    private static void Validate(Customer customer)
+    {
+        if (string.IsNullOrWhiteSpace(customer.firstName))
+            throw new ArgumentNullException(nameof(customer.firstName));
+
+        if (string.IsNullOrWhiteSpace(customer.lastName))
+            throw new ArgumentNullException(nameof(customer.lastName));
+
+        if (customer.age < 18)
+            throw new ArgumentOutOfRangeException(nameof(customer.age));
+        
+        if (customer.id <= 0)
+            throw new ArgumentOutOfRangeException(nameof(customer.id));
+            
+        if (customers.Any(c => c.id == customer.id))
+            throw new ArgumentException ($"Customer #{customer.id} already exists");
+    }
+
+    public static List<Customer> GetAll() => CustomerDataService.GetCustomers().ToList();
     
     public static void SortAdd(Customer customer)
     {
-        var customers = CustomerDataService.LoadCustomers().ToList();
-
-        if (customers.Any(c => c.id == customer.id))
-            throw new ArgumentException ($"Customer #{customer.id} already exists");
-
+        Validate(customer);
+        
         if(customers.Count == 0)
         {
             customers.Add(customer);
-            CustomerDataService.StoreData(customers);
+            CustomerDataService.SaveData(customers);
             return;
         }
 
@@ -51,8 +71,8 @@ public static class CustomerService
                 }
             }
         }
-        
-        CustomerDataService.StoreData(customers);
+
+        CustomerDataService.SaveData(customers);
     }
 
     

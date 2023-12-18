@@ -1,23 +1,21 @@
 using LiteDB;
 
+/// <summary>
+/// This class is responsible for storing and retrieving data from the database.
+/// </summary>
 public static class CustomerDataService 
 {
-    const string databaseName = "CustomersData.db";
-    public static IEnumerable<Customer> LoadCustomers()
+    const string databaseName = "CustomersData.db"; //move to appSettings.json
+    public static IEnumerable<Customer> GetCustomers()
     {
         using(var db = new LiteDatabase(databaseName))
-        {
-            // Get customer collection
-            var col = db.GetCollection<Customer>("customers");
-            
-            // Create unique index in Name field
-            col.EnsureIndex(x => x.id, true);
-            
+        {            
+            var col = db.GetCollection<Customer>("customers");                        
             return col.FindAll().ToList();
         }
     }
 
-    public static void StoreData(IEnumerable<Customer> customers)
+    public static void SaveData(IEnumerable<Customer> customers)
     {
         using(var db = new LiteDatabase(databaseName))
         {
