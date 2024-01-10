@@ -23,9 +23,9 @@ OR
 using <sub>CustomerManager.http</sub> by VSCode to test API
 
 ## Docker
+<sub>build docker image:</sub> *docker build -t customer-manager -f Dockerfile .*
 
-build docker image: *docker build -t customer-manager -f Dockerfile .*
-running image: *docker run --name customer-manager -p 5225:5225 customer-manager*
+<sub>running image:</sub> *docker run --name customer-manager -p 5225:5225 customer-manager*
 
 
 
