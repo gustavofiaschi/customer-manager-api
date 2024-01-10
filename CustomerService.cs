@@ -25,6 +25,8 @@ public static class CustomerService
             throw new ArgumentException ($"Customer #{customer.Id} already exists");
     }
 
+    public static string Test() => CustomerDataService.Test();
+
     public static List<Customer> GetAll() => CustomerDataService.GetCustomers().ToList();
     
     public static void SortAdd(Customer customer)

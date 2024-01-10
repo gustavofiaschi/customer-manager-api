@@ -1,3 +1,4 @@
+using System.Text;
 using LiteDB;
 
 /// <summary>
@@ -6,6 +7,31 @@ using LiteDB;
 public static class CustomerDataService 
 {
     const string databaseName = "CustomersData.db"; //move to appSettings.json
+
+    public static string Test()
+    {
+        StringBuilder sb = new StringBuilder();
+        try
+        {
+            sb.AppendLine($"File {databaseName} exists: {System.IO.File.Exists(databaseName)}");
+
+            if(!System.IO.File.Exists(databaseName)) 
+            {
+                sb.AppendLine("Creating database...");
+                using(var db = new LiteDatabase(databaseName))
+                {            
+                    sb.AppendLine($"db.UserVersion: {db.UserVersion}");
+                }
+            }
+        }
+        catch (System.Exception ex)
+        {
+            sb.AppendLine($"Erro: {ex.Message}");
+        }     
+
+        return sb.ToString();   
+    }
+
     public static IEnumerable<Customer> GetCustomers()
     {
         using(var db = new LiteDatabase(databaseName))

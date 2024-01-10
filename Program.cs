@@ -18,6 +18,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapGet("/test", () => {
+    return CustomerService.Test();
+});
+
 app.MapGet("/customers", () => CustomerService.GetAll());
 
 app.MapPost("/customers", (Customer[] customers) =>
